@@ -10,12 +10,13 @@ class BankAccount:
             f"\nAccount '{self.name}' created.\nBalance = ${self.balance:.2f}")
 
     def getBalance(self):
-        print(f"\nAccount '{self.name}' balance = ${self.balance:.2f}")
+        formatted_balance = "${:.2f}".format(self.balance)
+        return formatted_balance
 
     def deposit(self, amount):
         self.balance = self.balance + amount
         print("\nDeposit complete.")
-        self.getBalance()
+        print(f"New balance = {self.getBalance()}")
 
     def viableTransaction(self, amount):
         if self.balance >= amount:
@@ -30,7 +31,7 @@ class BankAccount:
             self.viableTransaction(amount)
             self.balance = self.balance - amount
             print("\nWithdraw complete.")
-            self.getBalance()
+            print(f"New balance = {self.getBalance()}")
         except BalanceException as error:
             print(f"\nWithdraw interrupted: {error}")
 
@@ -47,9 +48,9 @@ class BankAccount:
 
 class InterestRewardsAcct(BankAccount):
     def deposit(self, amount):
-        self.balance = self.balance + (amount*1.05)
+        self.balance = self.balance + (amount*1.05) 
         print("\nDeposit complete.")
-        self.getBalance()
+        print(f"New Balance = {self.getBalance()}")
 
 
 class SavingsAcct(InterestRewardsAcct):
@@ -62,6 +63,6 @@ class SavingsAcct(InterestRewardsAcct):
             self.viableTransaction(amount + self.fee)
             self.balance = self.balance - (amount + self.fee)
             print("\nWithdraw completed.")
-            self.getBalance()
+            print(f"New Balance = {self.getBalance()}")
         except BalanceException as error:
             print(f"\nWithdraw interrupted: {error}")
